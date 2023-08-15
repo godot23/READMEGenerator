@@ -37,6 +37,12 @@ let {title, description, TOC, installation, usage, licenses} = await inquirer
             'GNU License'
         ]
     },
+    {
+        type: 'input',
+        name: 'contributers',
+        message: 'please list your contributors'
+    },
+    
 ])
 
 let readmeText = `
