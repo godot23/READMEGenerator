@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import fs from "fs/promises";
 
-let {title, description, TOC, installation, usage, licenses, contributers} = await inquirer    
+let {title, description, TOC, installation, usage, licenses, contributers, tests, questions} = await inquirer    
     .prompt([{
         type: 'input',
         name: 'title',
@@ -42,6 +42,16 @@ let {title, description, TOC, installation, usage, licenses, contributers} = awa
         name: 'contributers',
         message: 'please list your contributors'
     },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'please add any tests you performed'
+    },
+    {
+        type: 'input',
+        name: 'questions',
+        message: 'please input any questions that need to be addressed'
+    }
 
 ])
 
@@ -67,6 +77,12 @@ ${generateLicense(licenses)}
 
 ### Contributors
 ${contributers}
+
+### Tests
+${tests}
+
+### Questions
+${questions}
 `
 
 console.log(readmeText);
