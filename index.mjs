@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import fs from fs/promises;
+import fs from "fs/promises";
 
 let {title, description, TOC, installation, usage, licenses} = await inquirer    
     .prompt([{
@@ -42,7 +42,7 @@ let {title, description, TOC, installation, usage, licenses} = await inquirer
         name: 'contributers',
         message: 'please list your contributors'
     },
-    
+
 ])
 
 let readmeText = `
@@ -57,6 +57,8 @@ ${description}
 ${generateLicense(licenses)}
 `
 
+console.log(readmeText);
+
 function generateLicense(choice){
     if(choice === "MIT License"){
         return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"
@@ -68,3 +70,4 @@ function generateLicense(choice){
         return "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)"
     }
 }
+
