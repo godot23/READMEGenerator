@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import fs from "fs/promises";
 
-let {title, description, TOC, installation, usage, licenses} = await inquirer    
+let {title, description, TOC, installation, usage, licenses, contributers} = await inquirer    
     .prompt([{
         type: 'input',
         name: 'title',
@@ -47,14 +47,26 @@ let {title, description, TOC, installation, usage, licenses} = await inquirer
 
 let readmeText = `
 
-# title
+# Title
 ${title}
 
 ## Project Description
 ${description}
 
+### Table of Contents
+${TOC}
+
+### Installation
+${installation}
+
+### Usage
+${usage}
+
 ### license
 ${generateLicense(licenses)}
+
+### Contributors
+${contributers}
 `
 
 console.log(readmeText);
