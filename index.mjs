@@ -1,8 +1,10 @@
 import inquirer from "inquirer";
-import fs from "fs/promises";
+import fs from "fs";
+import path from "path";
+import makeREADME from "./utils/generateReadme.js";
 
-let {title, description, TOC, installation, usage, licenses, contributers, tests, questions} = await inquirer    
-    .prompt([{
+let userInput = 
+    [{
         type: 'input',
         name: 'title',
         message: 'what is the title of your project?'
@@ -11,11 +13,6 @@ let {title, description, TOC, installation, usage, licenses, contributers, tests
         type: 'input',
         name: 'description',
         message: 'Input a description'
-    },
-    {
-        type: 'input',
-        name: 'TOC',
-        message: `please input the items in your table of contents, seperated by commas`
     },
     {
         type: 'input',
@@ -49,53 +46,26 @@ let {title, description, TOC, installation, usage, licenses, contributers, tests
     },
     {
         type: 'input',
-        name: 'questions',
-        message: 'please input any questions that need to be addressed'
+        name: 'username',
+        message: 'please input your github username'
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'please enter your email address'
     }
+]
 
-])
-
-let readmeText = `
-
-# Title
-${title}
-
-## Project Description
-${description}
-
-### Table of Contents
-${TOC}
-
-### Installation
-${installation}
-
-### Usage
-${usage}
-
-### license
-${generateLicense(licenses)}
-
-### Contributors
-${contributers}
-
-### Tests
-${tests}
-
-### Questions
-${questions}
-`
-
-console.log(readmeText);
-
-function generateLicense(choice){
-    if(choice === "MIT License"){
-        return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)"
-    }
-    else if(choice === "Apache License"){
-        return "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)"
-    }
-    else if(choice === "GNU License"){
-        return "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)"
-    }
+function writeFile(fileName, data){
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
 }
 
+function init(){
+    inquirer.prompt(userInput)
+    .then ((param) => {
+    console.log("readme being generated, please wait");
+    writeFile("README.md", makeREADME({...param}));
+    })
+}
+
+init();
